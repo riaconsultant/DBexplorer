@@ -2,6 +2,7 @@ package com.manu.service;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.ws.rs.Consumes;
@@ -19,6 +20,11 @@ import javax.ws.rs.core.UriInfo;
 import org.codehaus.jettison.json.JSONArray;
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
+
+import com.automation.bean.CreateDoExample;
+import com.automation.dto.FieldNameType;
+import com.automation.dto.MainDto;
+import com.automation.dto.RequestDto;
 
 
 @Path("/service")
@@ -71,8 +77,40 @@ public class TestService {
 	
 	@GET
 	@Path("/todo")
-	@Produces(MediaType.TEXT_HTML)
-	public String getTod() {
-		return "Hello";
+	@Produces({MediaType.APPLICATION_JSON})
+	@Consumes({MediaType.APPLICATION_JSON})
+	public MainDto getTod() {
+		MainDto maindto = new MainDto();
+		RequestDto rdto =new RequestDto();
+		RequestDto rdto2 =new RequestDto();
+		FieldNameType ft = new FieldNameType();
+		ft.setName("sid");
+		ft.setType("String");
+		
+		List<FieldNameType> listf = new ArrayList<FieldNameType>();
+		listf.add(ft);
+		listf.add(ft);
+		List<RequestDto> rlist =new ArrayList<RequestDto>();
+		rdto.setDtoName("com.incture.RequestDto");
+		rdto.setFieldCount(2);
+		rdto.setFieldTypeName(listf);
+		rdto2.setDtoName("com.incture.ResponseDto");
+		rdto2.setFieldCount(2);
+		rdto2.setFieldTypeName(listf);
+		rlist.add(rdto);
+		rlist.add(rdto2);
+		maindto.setRequestdto(rlist);
+		
+		return maindto;
+	}
+	
+	@POST
+	@Path("/generate")
+	@Produces({MediaType.APPLICATION_JSON})
+	@Consumes({MediaType.APPLICATION_JSON})
+	public String  getTodo(MainDto maindto) {
+		CreateDoExample obj = new CreateDoExample();
+		obj.createDirectory(maindto);
+		return "SUccess";
 	}
 }
