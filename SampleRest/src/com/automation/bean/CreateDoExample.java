@@ -15,6 +15,7 @@ import javax.jws.WebParam;
 
 import com.automation.dao.CreateJavaLayerLogic;
 import com.automation.dto.MainDto;
+import com.automation.dto.RequestBeanDto;
 import com.automation.dto.RequestDto;
 import com.automation.dto.RequestEntityDto;
 public class CreateDoExample {
@@ -44,17 +45,15 @@ public class CreateDoExample {
 
 		private final static Class convertToJavaClassType(String name) {
 			Class c = (Class) PRIMITIVE_NAME_TYPE_MAP.get(name);
-//			if (c == null) {
+			if (c == null) {
 //				try {
-//					 c = Class.forName(name);
-//					return c;
-////					c = (Class) Class.forName(name);
-//					// c = cl.loadClass(name);
+//					 c = Class.forName(ArrayList);
+//					 return c;
 //				} catch (ClassNotFoundException e) {
 //					System.out.println(c+"Parameter(Type) class not found: " + name);
 //				}
-//
-//			}
+
+			}
 
 			// int arraySize = 0;
 			// while (name.endsWith("[]")) {
@@ -74,6 +73,13 @@ public class CreateDoExample {
 			return c;
 		}
 		public void createDirectory(MainDto maindto){
+//			System.out.println(maindto.getRequestBeandto()+"==="+maindto.getRequestdto());
+			if(maindto != null && maindto.getRequestBeandto()!=null && maindto.getRequestBeandto().size() > 0){
+				for(RequestBeanDto dto : maindto.getRequestBeandto()){
+					createSrcBeanDto(dto);
+				}
+				
+			}
 			if(maindto != null && maindto.getRequestdto()!=null && maindto.getRequestdto().size() > 0){
 				for(RequestDto dto : maindto.getRequestdto()){
 					createSrcDto(dto);
@@ -86,8 +92,16 @@ public class CreateDoExample {
 				}
 				
 			}
-			
-			
+		}
+		private void createSrcBeanDto(RequestBeanDto dto) {
+			// TODO Auto-generated method stub
+			CreateDoExample obj = new CreateDoExample();
+			try{
+				CreateJavaLayerLogic javaLayerLogic = new CreateJavaLayerLogic();
+				javaLayerLogic.createBeanClass(dto);
+			}catch(Exception e ){
+				
+			}
 		}
 		public  void createSrcEntity(RequestEntityDto dto){
 			CreateDoExample obj = new CreateDoExample();

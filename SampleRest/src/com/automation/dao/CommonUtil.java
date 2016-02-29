@@ -3,6 +3,8 @@ package com.automation.dao;
 import java.io.IOException;
 import java.util.Map;
 
+import com.automation.dto.RequestBeanDto;
+
 public class CommonUtil {
 	
 	public StringBuilder startClassCreation(StringBuilder builder, String className,
@@ -124,6 +126,20 @@ public class CommonUtil {
 		builder.append("\n");
 		builder.append("\n");
 	
+		return builder;
+	}
+
+	public StringBuilder startBeanClassCreation(StringBuilder builder,RequestBeanDto dto) {
+		// TODO Auto-generated method stub
+		builder.append("import ").append("javax.ejb.Stateless;\n");
+		builder.append("import ").append("javax.persistence.EntityManager;\n");
+		builder.append("import ").append("javax.persistence.PersistenceContext;\n\n\n@Stateless");
+		builder.append("public class "+ dto.getBeanName() +"implements "+dto.getBeanName()+"Local {\n\n\n");
+		builder.append("public "+ dto.getBeanName() +"(){\n\n}\n ");
+		builder.append(" @PersistenceContext(unitName=\""+dto.getPersistentunit()+"\"\nprivate EntityManager em;\n\n");
+		
+		
+		 
 		return builder;
 	}
 

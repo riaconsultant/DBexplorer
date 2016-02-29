@@ -9,6 +9,14 @@ public class MainDto {
 	
 	private List<RequestDto> requestdto;
 	private List<RequestEntityDto> requestentitydto;
+	private List<RequestBeanDto> requestbean;
+	
+	public List<RequestBeanDto> getRequestBeandto() {
+		return requestbean;
+	}
+	public void setRequestBeandto(List<RequestBeanDto> requestbean) {
+		this.requestbean = requestbean;
+	}
 	public List<RequestDto> getRequestdto() {
 		return requestdto;
 	}

@@ -24,6 +24,7 @@ import org.codehaus.jettison.json.JSONObject;
 import com.automation.bean.CreateDoExample;
 import com.automation.dto.FieldNameType;
 import com.automation.dto.MainDto;
+import com.automation.dto.RequestBeanDto;
 import com.automation.dto.RequestDto;
 
 
@@ -100,7 +101,12 @@ public class TestService {
 		rlist.add(rdto);
 		rlist.add(rdto2);
 		maindto.setRequestdto(rlist);
-		
+		RequestBeanDto bdto = new RequestBeanDto();
+		bdto.setBeanName("bb");
+		List<RequestBeanDto> bdtolist = new ArrayList<RequestBeanDto>();
+		bdtolist.add(bdto);
+		bdtolist.add(bdto);
+		maindto.setRequestBeandto(bdtolist);
 		return maindto;
 	}
 	
@@ -110,6 +116,7 @@ public class TestService {
 	@Consumes({MediaType.APPLICATION_JSON})
 	public String  getTodo(MainDto maindto) {
 		CreateDoExample obj = new CreateDoExample();
+		System.out.println(maindto.getRequestBeandto()+"==="+maindto.getRequestdto());
 		obj.createDirectory(maindto);
 		return "SUccess";
 	}

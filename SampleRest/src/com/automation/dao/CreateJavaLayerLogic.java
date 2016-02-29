@@ -8,6 +8,9 @@ import java.io.OutputStreamWriter;
 import java.util.Map;
 import java.util.regex.Matcher;
 
+import com.automation.dto.RequestBeanDto;
+import com.automation.util.*;
+
 public class CreateJavaLayerLogic {
 
 	
@@ -18,9 +21,9 @@ public class CreateJavaLayerLogic {
 		String packageName = "";
 		StringBuilder builder= new StringBuilder();
 		if(fileType == 1){
-			packageName = "com.nitin.saurabh.make.dto";
+			packageName = LocalConstant.dtoPackageName;
 		}else if(fileType ==2){
-			packageName = "com.nitin.saurabh.make.do";
+			packageName = LocalConstant.entityPackageName;
 		}
 		
 		if (packageName != null)
@@ -28,6 +31,9 @@ public class CreateJavaLayerLogic {
 		builder = commonutil.startClassCreation(builder,className,fields,customfields);
 		if(fileType == 2){
 			builder = commonutil.getEntityTags(builder,className);
+		}else if(fileType ==1 ){
+			builder.append("public class ").append(className).append("\n");
+			builder.append("{\n");
 		}
 		
 		builder = commonutil.getPojoClass(fileType,builder,fields,customfields);
@@ -46,6 +52,27 @@ public class CreateJavaLayerLogic {
 
 		writer.write(builder.toString());
 		writer.close();
+	}
+
+	public void createBeanClass(RequestBeanDto dto) throws IOException{
+		// TODO Auto-generated method stub
+		CommonUtil commonutil = new CommonUtil();
+		String packageName = LocalConstant.beanPackageName;
+		StringBuilder builder= new StringBuilder();
+		builder.append("package ").append(packageName).append(";\n");
+		builder = commonutil.startBeanClassCreation(builder,dto);
+		File dir = new File(packageName.replaceAll( "\\.",
+				Matcher.quoteReplacement(System.getProperty("file.separator"))));
+		System.err.println ("path--"+dir.getAbsolutePath());
+		
+	
+		dir.mkdirs();
+		BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(
+				new FileOutputStream(new File(dir, dto.getBeanName() + ".java"))));
+
+		writer.write(builder.toString());
+		writer.close();
+		
 	}
 
 }
