@@ -26,6 +26,9 @@ import com.automation.dto.FieldNameType;
 import com.automation.dto.MainDto;
 import com.automation.dto.RequestBeanDto;
 import com.automation.dto.RequestDto;
+import com.incture.automate.RequestMainDto;
+import com.incture.automate.Shape;
+import com.incture.automate.ShapeFactory;
 
 
 @Path("/service")
@@ -117,7 +120,20 @@ public class TestService {
 	public String  getTodo(MainDto maindto) {
 		CreateDoExample obj = new CreateDoExample();
 		System.out.println(maindto.getRequestBeandto()+"==="+maindto.getRequestdto());
-		obj.createDirectory(maindto);
+		//obj.createDirectory(maindto);
 		return "SUccess";
+	}
+	
+	
+	@POST
+	@Path("/createFile")
+	@Produces({ MediaType.APPLICATION_JSON })
+	@Consumes({ MediaType.APPLICATION_JSON })
+	public String fileCreation(RequestMainDto requestMaindto) {
+
+		// Get a DTO having Type of Class to create (DO,DTO,DAO)
+		System.out.println("inside fileCreation()... calling getShape()");
+		ShapeFactory.getShape(requestMaindto);
+		return "Success";
 	}
 }

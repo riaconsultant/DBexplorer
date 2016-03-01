@@ -4,10 +4,13 @@ import java.io.IOException;
 import java.util.Map;
 
 import com.automation.dto.RequestBeanDto;
+import com.automation.util.LocalConstant;
+import com.incture.automate.ParentDTO;
+import com.incture.automate.RequestBean;
 
 public class CommonUtil {
 	
-	public StringBuilder startClassCreation(StringBuilder builder, String className,
+	public StringBuilder startClassCreation(int fileType,StringBuilder builder, String className,
 			Map<String, Class<?>> fields,Map<String, String> customfields) throws IOException{
 		for (Map.Entry<String, Class<?>> field : fields.entrySet()) {
 			if (field != null && field.getValue() != null && !field.getValue().isPrimitive()&& !field.getValue().getName().contains("lang")) {
@@ -15,12 +18,16 @@ public class CommonUtil {
 						.append(";\n");
 			}
 		}
-		for (Map.Entry<String, String> customfield : customfields.entrySet()) {
-			if(customfield !=null && customfield.getValue() != null){
-				builder.append("import com.incture.common.").append(customfield.getValue())
-				.append(";\n");
+		if(fileType == 1){
+			for (Map.Entry<String, String> customfield : customfields.entrySet()) {
+				if(customfield !=null && customfield.getValue() != null){
+					builder.append(LocalConstant.PACKAGE_DTO).append(customfield.getValue())
+					.append(";\n");
+				}
 			}
 		}
+		
+		
 		return builder;
 		
 	}
@@ -39,7 +46,6 @@ public class CommonUtil {
 
 	public StringBuilder getPojoClass(int fileType, StringBuilder builder,
 			Map<String, Class<?>> fields, Map<String, String> customfields) {
-		// TODO Auto-generated method stub
 		boolean flag = false;
 		for (Map.Entry<String, Class<?>> field : fields.entrySet()) {
 			String name = field.getKey();
@@ -112,13 +118,11 @@ public class CommonUtil {
 
 
 	public StringBuilder getEntityTags(StringBuilder builder, String className) {
-		// TODO Auto-generated method stub
-
 		builder.append("import ").append("java.io.Serializable").append(";\n");
 		builder.append("import ").append("javax.persistence.*").append(";\n\n\n");
 		builder.append("@Entity").append("\n");
 		builder.append("@Table(name=\"").append(className).append("\"").append(")\n\n");
-		builder.append("public class ").append(className).append("\n");
+		builder.append("public class ").append(className).append(" implements Serializable").append("\n");
 		builder.append("{\n");
 
 		builder.append("private static final long serialVersionUID = 1L;\n");	
@@ -129,17 +133,23 @@ public class CommonUtil {
 		return builder;
 	}
 
-	public StringBuilder startBeanClassCreation(StringBuilder builder,RequestBeanDto dto) {
-		// TODO Auto-generated method stub
-		builder.append("import ").append("javax.ejb.Stateless;\n");
-		builder.append("import ").append("javax.persistence.EntityManager;\n");
-		builder.append("import ").append("javax.persistence.PersistenceContext;\n\n\n@Stateless");
-		builder.append("public class "+ dto.getBeanName() +"implements "+dto.getBeanName()+"Local {\n\n\n");
-		builder.append("public "+ dto.getBeanName() +"(){\n\n}\n ");
-		builder.append(" @PersistenceContext(unitName=\""+dto.getPersistentunit()+"\"\nprivate EntityManager em;\n\n");
+	public StringBuilder startBeanClassCreation(StringBuilder builder,ParentDTO dto) {
+		RequestBean reqBean = null;
+		if(dto instanceof RequestBean){
+			reqBean = (RequestBean)dto;
+			builder.append("import ").append("javax.ejb.Stateless; \n");
+			builder.append("import ").append("javax.persistence.EntityManager; \n");
+			builder.append("import ").append("javax.persistence.PersistenceContext; \n");
+			builder.append("import ").append(LocalConstant.PACKAGE_DO + "\n");
+			builder.append("import ").append(LocalConstant.PACKAGE_DTO +"\n");
+			builder.append("import ").append(LocalConstant.PACKAGE_DAO +"\n");
+			builder.append("\n\n@Stateless \n");
+			builder.append("public class "+ reqBean.getBeanName() +"implements "+reqBean.getBeanName()+"Local {\n\n\n");
+			builder.append("public "+ reqBean.getBeanName() +"(){\n\n}\n ");
+			builder.append(" @PersistenceContext(unitName=\""+reqBean.getPersistentUnit()+"\") \nprivate EntityManager em;\n\n");
+			//for()
+		}
 		
-		
-		 
 		return builder;
 	}
 
