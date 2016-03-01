@@ -5,6 +5,8 @@ import java.util.Map;
 
 import com.automation.dto.RequestBeanDto;
 import com.automation.util.LocalConstant;
+import com.incture.automate.MethodProperty;
+import com.incture.automate.ParameterProperty;
 import com.incture.automate.ParentDTO;
 import com.incture.automate.RequestBean;
 
@@ -18,14 +20,14 @@ public class CommonUtil {
 						.append(";\n");
 			}
 		}
-		if(fileType == 1){
-			for (Map.Entry<String, String> customfield : customfields.entrySet()) {
-				if(customfield !=null && customfield.getValue() != null){
-					builder.append(LocalConstant.PACKAGE_DTO).append(customfield.getValue())
-					.append(";\n");
-				}
-			}
-		}
+//		if(fileType == 1){
+//			for (Map.Entry<String, String> customfield : customfields.entrySet()) {
+//				if(customfield !=null && customfield.getValue() != null){
+//					builder.append(LocalConstant.PACKAGE_DTO).append(customfield.getValue())
+//					.append(";\n");
+//				}
+//			}
+//		}
 		
 		
 		return builder;
@@ -147,9 +149,30 @@ public class CommonUtil {
 			builder.append("public class "+ reqBean.getBeanName() +"implements "+reqBean.getBeanName()+"Local {\n\n\n");
 			builder.append("public "+ reqBean.getBeanName() +"(){\n\n}\n ");
 			builder.append(" @PersistenceContext(unitName=\""+reqBean.getPersistentUnit()+"\") \nprivate EntityManager em;\n\n");
-			//for()
-		}
 		
+			for(MethodProperty mProperty : ((RequestBean) dto).getmProperty()){
+				builder.append("public "+ mProperty.getReturnType()+" "+mProperty.getName()+" (");
+				for(int i = 0 ;i <mProperty.getpProperty().size();i++){
+					ParameterProperty inputParameter = mProperty.getpProperty().get(i);
+					builder.append( inputParameter.getpDataType()+" "+inputParameter.getpName());
+					if(i+1 != mProperty.getpProperty().size()){
+						builder.append( ",");
+					}else {
+						builder.append( "){\n");
+					}
+				}
+//				for(ParameterProperty inputParameter : mProperty.getpProperty()){
+//					builder.append( inputParameter.getpDataType()+" "+inputParameter.getpName());
+//				}
+				if(mProperty.getReturnType().equals("void")){
+					builder.append("return ;\n}\n");
+				}else {
+					builder.append("return null;\n}\n");
+				}
+				
+			}
+		}
+		builder.append("}\n}\n");
 		return builder;
 	}
 
