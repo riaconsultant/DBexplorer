@@ -1,0 +1,75 @@
+{
+  "requestDto": [
+      {
+          "dtoName": "RequestDto",
+
+          "fieldProperty": [
+              {
+                  "name": "sid",
+                  "type": "java.sql.Date"
+              },
+              {
+                  "name": "sname",
+                  "type": "java.io.BufferReader"
+              }
+          ]
+      },
+      {
+          "dtoName": "ResponseDto",
+         
+          "fieldProperty": [
+              {
+                  "name": "sid",
+                  "type": "String"
+              },
+              {
+                  "name": "sname",
+                  "type": "RequestDto"
+              }
+          ]
+      }
+  ],
+  "requestEntity": [
+      {
+          "entityName": "RequestEntity",
+
+          "fieldProperty": [
+              {
+                  "name": "sid",
+                  "type": "java.util.Date"
+              },
+              {
+                  "name": "sname",
+                  "type": "date"
+              }
+          ]
+      },
+      {
+          "entityName": "ResponseEntity",
+         
+          "fieldProperty": [
+              {
+                  "name": "sid",
+                  "type": "String"
+              },
+              {
+                  "name": "sname",
+                  "type": "int"
+              }
+          ]
+      }
+  ],
+ "requestBean": [
+      {
+          "beanName": "DemoBean",
+        "requestDto": "RequestDto",
+        "requestEntity" : "ResponseEntity",
+        "persistentUnit"	: "NITIN_PU",
+        "mProperty" : [{"name":"create","returnType":"String","pProperty":[{"pName":"id","pDataType":"int"}]},
+                       {"name":"create","returnType":"void","pProperty":[{"pName":"id","pDataType":"String"},
+                                                                          {"pName":"name","pDataType":"RDto"}]}
+        
+        ]
+      }
+  ]
+}

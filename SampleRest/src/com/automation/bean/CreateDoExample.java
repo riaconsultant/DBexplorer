@@ -2,6 +2,7 @@ package com.automation.bean;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.StringTokenizer;
 
 import com.automation.dao.CreateJavaLayerLogic;
 import com.incture.automate.ParentDTO;
@@ -15,23 +16,6 @@ public class CreateDoExample {
 
 	static String packageName;
 	StringBuilder builder = new StringBuilder();
-
-	// private static final Map<String, Class<?>> PRIMITIVE_NAME_TYPE_MAP = new
-	// HashMap<String, Class<?>>();
-	// static {
-	// PRIMITIVE_NAME_TYPE_MAP.put("boolean", Boolean.TYPE);
-	// PRIMITIVE_NAME_TYPE_MAP.put("byte", Byte.TYPE);
-	// PRIMITIVE_NAME_TYPE_MAP.put("char", Character.TYPE);
-	// PRIMITIVE_NAME_TYPE_MAP.put("short", Short.TYPE);
-	// PRIMITIVE_NAME_TYPE_MAP.put("int", Integer.TYPE);
-	// PRIMITIVE_NAME_TYPE_MAP.put("long", Long.TYPE);
-	// PRIMITIVE_NAME_TYPE_MAP.put("float", Float.TYPE);
-	// PRIMITIVE_NAME_TYPE_MAP.put("double", Double.TYPE);
-	// PRIMITIVE_NAME_TYPE_MAP.put("String", String.class);
-	// PRIMITIVE_NAME_TYPE_MAP.put("Double", Double.class);
-	// PRIMITIVE_NAME_TYPE_MAP.put("Boolean", Boolean.class);
-	// PRIMITIVE_NAME_TYPE_MAP.put("Integer", Integer.class);
-	// }
 
 	// public static void createPackage(RequestNewDTO dto) {
 	// CreateDoExample createExample = new CreateDoExample();
@@ -56,14 +40,12 @@ public class CreateDoExample {
 	 * classes.add(convertToJavaClass(it.next(), cl)); } return
 	 * classes.toArray(new Class[classes.size()]); }
 	 */
-
+	
+	
+	
+	/**1. PRIMITIVE_NAME_TYPE_MAP */
+	
 	private final static Class convertToJavaClassType(String name) {
-		
-		
-		
-		// 1. PRIMITIVE_NAME_TYPE_MAP
-		// 2. List like List<String> or Map<String,String>
-		
 		Class c = (Class) UtilConstantImpl.PRIMITIVE_NAME_TYPE_MAP.get(name);
 		if (c == null) {
 			try {
@@ -72,52 +54,51 @@ public class CreateDoExample {
 				System.out.println("Class not found " + name);
 			}
 		}
-		return c;
-		
-		
-		// int arraySize = 0;
-		// while (name.endsWith("[]")) {
-		// name = name.substring(0, name.length() - 2);
-		// arraySize++;
-		// }
-		// if we have an array get the array class
-		// if (arraySize > 0) {
-		// int[] dims = new int[arraySize];
-		// for (int i = 0; i < arraySize; i++) {
-		// dims[i] = 1;
-		// }
-		// c = Array.newInstance(c, dims).getClass();
-		// }
-		// System.out.println(c);
 
-		
+		return c;
 	}
 
-	// public void createDirectory(RequestMainDto RequestMainDto) {
-	// //
-	// System.out.println(maindto.getRequestBeandto()+"==="+maindto.getRequestdto());
-	// if (RequestMainDto != null && RequestMainDto.getRequestBean() != null
-	// && RequestMainDto.getRequestBean().size() > 0) {
-	// for (RequestBean dto : RequestMainDto.getRequestBean()) {
-	// createSrcBean(dto);
-	// }
-	//
-	// }
-	// if (RequestMainDto != null && RequestMainDto.getRequestDto() != null
-	// && RequestMainDto.getRequestDto().size() > 0) {
-	// for (RequestDto dto : RequestMainDto.getRequestDto()) {
-	// createSrcDto(dto);
-	// }
-	//
-	// }
-	// if (RequestMainDto != null && RequestMainDto.getRequestEntity() != null
-	// && RequestMainDto.getRequestEntity().size() > 0) {
-	// for (RequestEntity dto : RequestMainDto.getRequestEntity()) {
-	// createSrcEntity(dto);
-	// }
-	//
-	// }
-	// }
+	
+	/** 2. List like List<String> or Map<String,String> */
+	private final static Class convertToJavaUtilType(String name) {
+
+		Class c = (Class) UtilConstantImpl.PRIMITIVE_NAME_TYPE_MAP.get(name);
+		if (c == null && name.contains("<")) {
+			String pUtilName = "java.util.";
+
+			String utilClass = pUtilName + name.substring(0, name.indexOf('<'));
+			String gClass = name.substring(name.indexOf('<') + 1,
+					name.indexOf('>'));
+
+			/** List,Set,Map might contain <primitive> or <UserType> or
+			// <List<UserType>>.
+			// keyToken,valueToken are use to store generic type..
+			// like List<String> or Map<String,String> as keyToken = String
+			// and keyToken,ValueToken as String,String respectively.
+			// Need to implement keyToken,valueToken */
+
+			String keyToken = null, valueToken = null;
+
+			if (utilClass.equals("Map")) {
+				StringTokenizer st = new StringTokenizer(gClass);
+				keyToken = st.nextToken(",");
+				valueToken = st.nextToken();
+			} else {
+				keyToken = gClass;
+			}
+
+			System.out.println(gClass);
+			System.out.println(keyToken + " -  " + valueToken);
+
+			try {
+				c = Class.forName(utilClass);
+			} catch (ClassNotFoundException e) {
+				System.out.println("Class not found");
+			}
+
+		}
+		return c;
+	}
 
 	public static void createSrcBean(ParentDTO dto) {
 		try {
@@ -143,7 +124,10 @@ public class CreateDoExample {
 
 				if (convertToJavaClassType(reqEntity.getFieldProperty().get(i)
 						.getType()) == null) {
-					System.out.println(reqEntity.getFieldProperty().get(i).getName() + "  "+ reqEntity.getFieldProperty().get(i).getType());
+					System.out.println(reqEntity.getFieldProperty().get(i)
+							.getName()
+							+ "  "
+							+ reqEntity.getFieldProperty().get(i).getType());
 					customFields.put(reqEntity.getFieldProperty().get(i)
 							.getName(), reqEntity.getFieldProperty().get(i)
 							.getType());
@@ -165,7 +149,7 @@ public class CreateDoExample {
 
 	public static void createSrcDto(ParentDTO dto) {
 		try {
-
+			System.out.println("Inside createSrcDto()");
 			RequestDto reqDto = null;
 			if (dto instanceof RequestDto)
 				reqDto = (RequestDto) dto;
@@ -179,7 +163,11 @@ public class CreateDoExample {
 							reqDto.getFieldProperty().get(i).getName(), reqDto
 									.getFieldProperty().get(i).getType());
 				} else {
-					System.out.println(reqDto.getFieldProperty().get(i).getName() + "  "+ reqDto.getFieldProperty().get(i).getType());
+					System.out
+							.println(reqDto.getFieldProperty().get(i).getName()
+									+ "  "
+									+ reqDto.getFieldProperty().get(i)
+											.getType());
 					fields.put(reqDto.getFieldProperty().get(i).getName(),
 							convertToJavaClassType(reqDto.getFieldProperty()
 									.get(i).getType()));
@@ -194,13 +182,6 @@ public class CreateDoExample {
 		}
 
 	}
-
-	/*
-	 * public static void createFile(String DirectoryPath) throws IOException {
-	 * File file = new File(DirectoryPath); file.getParentFile().mkdirs();
-	 * FileWriter writer = new FileWriter(file); writer.write("abc");
-	 * writer.flush(); writer.close(); }
-	 */
 
 	public static boolean isNumeric(String str) {
 		for (char c : str.toCharArray()) {
