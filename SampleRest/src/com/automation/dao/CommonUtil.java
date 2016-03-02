@@ -3,7 +3,6 @@ package com.automation.dao;
 import java.io.IOException;
 import java.util.Map;
 
-import com.automation.dto.RequestBeanDto;
 import com.automation.util.LocalConstant;
 import com.incture.automate.MethodProperty;
 import com.incture.automate.ParameterProperty;
@@ -172,7 +171,7 @@ public class CommonUtil {
 				
 			}
 		}
-		builder.append("}\n}\n");
+		builder.append("}\n\n");
 		return builder;
 	}
 

@@ -58,6 +58,12 @@ public class CreateDoExample {
 	 */
 
 	private final static Class convertToJavaClassType(String name) {
+		
+		
+		
+		// 1. PRIMITIVE_NAME_TYPE_MAP
+		// 2. List like List<String> or Map<String,String>
+		
 		Class c = (Class) UtilConstantImpl.PRIMITIVE_NAME_TYPE_MAP.get(name);
 		if (c == null) {
 			try {

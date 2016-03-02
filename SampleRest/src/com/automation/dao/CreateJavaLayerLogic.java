@@ -43,7 +43,7 @@ public class CreateJavaLayerLogic {
 		// commonutil.getCustomPojoClass(FileType,builder,customfields);
 
 		builder.append("}\n");
-		builder.append("}\n");
+		//builder.append("}\n");
 		File dir = new File(packageName.replaceAll("\\.",
 				Matcher.quoteReplacement(System.getProperty("file.separator"))));
 		System.err.println("path--" + dir.getAbsolutePath());
