@@ -6,11 +6,11 @@
           "fieldProperty": [
               {
                   "name": "sid",
-                  "type": "java.sql.Date"
+                  "type": "int"
               },
               {
                   "name": "sname",
-                  "type": "java.io.BufferReader"
+                  "type": "String"
               }
           ]
       },
@@ -20,11 +20,11 @@
           "fieldProperty": [
               {
                   "name": "sid",
-                  "type": "String"
+                  "type": "int"
               },
               {
                   "name": "sname",
-                  "type": "RequestDto"
+                  "type": "String"
               }
           ]
       }
@@ -36,11 +36,11 @@
           "fieldProperty": [
               {
                   "name": "sid",
-                  "type": "java.util.Date"
+                  "type": "String"
               },
               {
                   "name": "sname",
-                  "type": "date"
+                  "type": "String"
               }
           ]
       },
@@ -54,7 +54,7 @@
               },
               {
                   "name": "sname",
-                  "type": "int"
+                  "type": "String"
               }
           ]
       }
