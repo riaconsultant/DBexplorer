@@ -10,6 +10,14 @@ public class MethodProperty {
 	private String returnType;
 	private int noOfParamaeter;
 	private List<ParameterProperty> pProperty;
+	private String callType;
+	public String getCallType() {
+		return callType;
+	}
+
+	public void setCallType(String callType) {
+		this.callType = callType;
+	}
 
 	public String getName() {
 		return name;

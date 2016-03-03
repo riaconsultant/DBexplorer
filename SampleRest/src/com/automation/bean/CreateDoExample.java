@@ -146,7 +146,15 @@ public class CreateDoExample {
 			e.printStackTrace();
 		}
 	}
-
+//	public static void createResrWrapper(ParentDTO dto){
+//		try {
+//			System.out.println("Inside createSrcBean()");
+//			CreateJavaLayerLogic javaLayerLogic = new CreateJavaLayerLogic();
+//			javaLayerLogic.createResrWrapper(dto);
+//		} catch (Exception e) {
+//
+//		}
+//	}
 	public static void createSrcDto(ParentDTO dto) {
 		try {
 			System.out.println("Inside createSrcDto()");

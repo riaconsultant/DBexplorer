@@ -148,7 +148,6 @@ public class CommonUtil {
 			builder.append("public class "+ reqBean.getBeanName() +"implements "+reqBean.getBeanName()+"Local {\n\n\n");
 			builder.append("public "+ reqBean.getBeanName() +"(){\n\n}\n ");
 			builder.append(" @PersistenceContext(unitName=\""+reqBean.getPersistentUnit()+"\") \nprivate EntityManager em;\n\n");
-		
 			for(MethodProperty mProperty : ((RequestBean) dto).getmProperty()){
 				builder.append("public "+ mProperty.getReturnType()+" "+mProperty.getName()+" (");
 				for(int i = 0 ;i <mProperty.getpProperty().size();i++){
@@ -170,6 +169,65 @@ public class CommonUtil {
 				}
 				
 			}
+		}
+		builder.append("}\n\n");
+		return builder;
+	}
+
+	public StringBuilder createRestWrapper(StringBuilder builder, ParentDTO dto) {
+		// TODO Auto-generated method stub
+		RequestBean reqBean = new RequestBean();
+		if(dto instanceof RequestBean){
+			reqBean = (RequestBean)dto;
+			builder.append("import ").append("import javax.ws.rs.GET; \n");
+			builder.append("import ").append("import javax.ws.rs.Consumes; \n");
+			builder.append("import ").append("import javax.ejb.EJB; \n");
+			builder.append("import ").append("import javax.ws.rs.POST; \n");
+			builder.append("import ").append("import javax.ws.rs.Path; \n");
+			builder.append("import ").append("import javax.ws.rs.PathParam; \n");
+			builder.append("import ").append("import javax.ws.rs.Produces; \n");
+			builder.append("import ").append("import javax.ws.rs.core.MediaType; \n");
+			builder.append("import ").append("import com.nitin.saurabh.make.*; \n");
+			
+			builder.append("@Path(\"/"+reqBean.getRestwrappername()+"\") \n");
+			builder.append("public class"+reqBean.getRestwrappername()+"{ \n\n");
+			builder.append("@EJB \n");
+			builder.append("private "+reqBean.getBeanName()+"Local "+reqBean.getBeanName().toLowerCase()+"\n\n");
+			
+			for(MethodProperty mProperty : ((RequestBean) dto).getmProperty()){
+				builder.append("@Path(\"/"+mProperty.getName()+"\") \n@"+mProperty.getCallType()+"\n");
+				builder.append("@Consumes( { MediaType.APPLICATION_JSON })\n");
+				builder.append("@Produces( { MediaType.APPLICATION_JSON })\n");
+				builder.append("public "+ mProperty.getReturnType()+" "+mProperty.getName()+"(");
+				for(int i = 0 ;i <mProperty.getpProperty().size();i++){
+					ParameterProperty inputParameter = mProperty.getpProperty().get(i);
+					builder.append( inputParameter.getpDataType()+" "+inputParameter.getpName());
+					if(i+1 != mProperty.getpProperty().size()){
+						builder.append( ",");
+					}else {
+						builder.append( "){\n");
+					}
+				}
+				if(!mProperty.getReturnType().equalsIgnoreCase("void")){
+					builder.append( mProperty.getReturnType()+" response = new "+mProperty.getReturnType()+"();\n");
+				}
+				
+				builder.append( "response = "+reqBean.getBeanName().toLowerCase()+"."+mProperty.getName()+"(");
+				for(int i = 0 ;i <mProperty.getpProperty().size();i++){
+					ParameterProperty inputParameter = mProperty.getpProperty().get(i);
+					builder.append(inputParameter.getpName());
+					if(i+1 != mProperty.getpProperty().size()){
+						builder.append( ",");
+					}else {
+						builder.append( ");\n");
+					}
+				}
+				if(mProperty.getReturnType().equals("void")){
+					builder.append("return ;\n}\n");
+				}else {
+					builder.append("return response;\n}\n");
+				}
+ 			}
 		}
 		builder.append("}\n\n");
 		return builder;

@@ -1,0 +1,78 @@
+{
+  "requestDto": [
+      {
+          "dtoName": "RequestDto",
+
+          "fieldProperty": [
+              {
+                  "name": "sid",
+                  "type": "int"
+              },
+              {
+                  "name": "sname",
+                  "type": "String"
+              }
+          ]
+      },
+      {
+          "dtoName": "ResponseDto",
+         
+          "fieldProperty": [
+              {
+                  "name": "sid",
+                  "type": "int"
+              },
+              {
+                  "name": "sname",
+                  "type": "String"
+              }
+          ]
+      }
+  ],
+  "requestEntity": [
+      {
+          "entityName": "RequestEntity",
+
+          "fieldProperty": [
+              {
+                  "name": "sid",
+                  "type": "String"
+              },
+              {
+                  "name": "sname",
+                  "type": "String"
+              }
+          ]
+      },
+      {
+          "entityName": "ResponseEntity",
+         
+          "fieldProperty": [
+              {
+                  "name": "sid",
+                  "type": "String"
+              },
+              {
+                  "name": "sname",
+                  "type": "String"
+              }
+          ]
+      }
+  ],
+ "requestBean": [
+      {
+          "beanName": "DemoBean",
+        "requestDto": "RequestDto",
+        "requestEntity" : "ResponseEntity",
+        "persistentUnit"	: "NITIN_PU",
+        "path":"demopath",
+		"restwrappername" : "restdemo",
+        "mProperty" : [{"name":"read","returnType":"String","callType":"GET","pProperty":[{"pName":"id","pDataType":"int"}]},
+                       {"name":"create","returnType":"void","callType":"POST","pProperty":[{"pName":"id","pDataType":"String"},
+                                                                          {"pName":"name","pDataType":"RDto"}]}
+
+        
+        ]
+      }
+  ]
+}
