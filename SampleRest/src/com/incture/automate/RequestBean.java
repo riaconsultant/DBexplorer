@@ -8,21 +8,13 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class RequestBean implements ParentDTO {
 
 	private String beanName;
-	private String restwrappername;
-	private String path;
+	private String restWrapperName;
 	private RequestEntity requestEntity;
 	private RequestDto requestDto;
 	private String persistentUnit;
 	private List<MethodProperty> mProperty;
-
-	public String getRestwrappername() {
-		return restwrappername;
-	}
-
-	public void setRestwrappername(String restwrappername) {
-		this.restwrappername = restwrappername;
-	}
-
+	private String path;
+	
 	public String getPath() {
 		return path;
 	}
@@ -30,6 +22,15 @@ public class RequestBean implements ParentDTO {
 	public void setPath(String path) {
 		this.path = path;
 	}
+
+	public String getRestWrapperName() {
+		return restWrapperName;
+	}
+
+	public void setRestWrapperName(String restWrapperName) {
+		this.restWrapperName = restWrapperName;
+	}
+
 	public String getBeanName() {
 		return beanName;
 	}

@@ -6,11 +6,12 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 public class MethodProperty {
 
+	private String callType;
 	private String name;
 	private String returnType;
 	private int noOfParamaeter;
 	private List<ParameterProperty> pProperty;
-	private String callType;
+
 	public String getCallType() {
 		return callType;
 	}

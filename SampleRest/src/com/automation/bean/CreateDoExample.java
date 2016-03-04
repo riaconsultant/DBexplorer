@@ -5,6 +5,8 @@ import java.util.Map;
 import java.util.StringTokenizer;
 
 import com.automation.dao.CreateJavaLayerLogic;
+import com.incture.automate.MethodProperty;
+import com.incture.automate.ParameterProperty;
 import com.incture.automate.ParentDTO;
 import com.incture.automate.RequestBean;
 import com.incture.automate.RequestDto;
@@ -103,8 +105,30 @@ public class CreateDoExample {
 	public static void createSrcBean(ParentDTO dto) {
 		try {
 			System.out.println("Inside createSrcBean()");
+			RequestBean reqBean = null;
+			if (dto instanceof RequestBean)
+				reqBean = (RequestBean) dto;
+			Map<String, Class<?>> rFields = new HashMap<String, Class<?>>();
+			Map<String, Class<?>> pFields = new HashMap<String, Class<?>>();
+			Map<String, String> rCustomFields = new HashMap<String, String>();
+			Map<String, String> pCustomFields = new HashMap<String, String>();
+			
+			for(MethodProperty mProperty : reqBean.getmProperty()){
+				if(convertToJavaClassType(mProperty.getReturnType()) == null){
+					rCustomFields.put(mProperty.getName(), mProperty.getReturnType());
+				}else{
+					rFields.put(mProperty.getName(), convertToJavaClassType(mProperty.getReturnType()));
+				}
+				for(ParameterProperty pProperty: mProperty.getpProperty()){
+					if(convertToJavaClassType(pProperty.getpDataType()) == null){
+						pCustomFields.put(pProperty.getpName(), pProperty.getpDataType());
+					}else{
+						pFields.put(pProperty.getpName(), convertToJavaClassType(pProperty.getpDataType()));
+					}
+				}
+			}
 			CreateJavaLayerLogic javaLayerLogic = new CreateJavaLayerLogic();
-			javaLayerLogic.createBeanClass(dto);
+			javaLayerLogic.createBeanClass(dto,rFields,pFields);
 		} catch (Exception e) {
 
 		}
@@ -146,15 +170,7 @@ public class CreateDoExample {
 			e.printStackTrace();
 		}
 	}
-//	public static void createResrWrapper(ParentDTO dto){
-//		try {
-//			System.out.println("Inside createSrcBean()");
-//			CreateJavaLayerLogic javaLayerLogic = new CreateJavaLayerLogic();
-//			javaLayerLogic.createResrWrapper(dto);
-//		} catch (Exception e) {
-//
-//		}
-//	}
+
 	public static void createSrcDto(ParentDTO dto) {
 		try {
 			System.out.println("Inside createSrcDto()");
@@ -197,6 +213,20 @@ public class CreateDoExample {
 				return false;
 		}
 		return true;
+	}
+
+
+	public static void createSrcDAO(ParentDTO dto) {
+
+		try {
+			System.out.println("Inside createSrcDAO()");
+			CreateJavaLayerLogic javaLayerLogic = new CreateJavaLayerLogic();
+			javaLayerLogic.createDAOClass(dto);
+		} catch (Exception e) {
+
+		}
+	
+		
 	}
 
 }

@@ -66,7 +66,7 @@
         "requestEntity" : "ResponseEntity",
         "persistentUnit"	: "NITIN_PU",
         "path":"demopath",
-		"restwrappername" : "restdemo",
+		"restWrapperName" : "restdemo",
         "mProperty" : [{"name":"read","returnType":"String","callType":"GET","pProperty":[{"pName":"id","pDataType":"int"}]},
                        {"name":"create","returnType":"void","callType":"POST","pProperty":[{"pName":"id","pDataType":"String"},
                                                                           {"pName":"name","pDataType":"RDto"}]}

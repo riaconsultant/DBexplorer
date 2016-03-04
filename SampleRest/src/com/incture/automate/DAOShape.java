@@ -6,7 +6,7 @@ public class DAOShape implements Shape {
 
 	@Override
 	public String draw(ParentDTO requestDao) {
-		CreateDoExample.createSrcEntity(requestDao);
+		CreateDoExample.createSrcDAO(requestDao);
 		return null;
 
 	}
