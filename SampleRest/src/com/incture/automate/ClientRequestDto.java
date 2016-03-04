@@ -5,7 +5,7 @@ import java.util.List;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement
-public class RequestMainDto {
+public class ClientRequestDto {
 
 	private List<RequestDto> requestDto;
 	private List<RequestEntity> requestEntity;

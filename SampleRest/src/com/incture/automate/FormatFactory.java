@@ -1,13 +1,13 @@
 package com.incture.automate;
 
-public class ShapeFactory {
+public class FormatFactory {
 
-	public static void getShape(RequestMainDto requestMainDto) {
-		Shape shape = null;
+	public static void getShape(ClientRequestDto requestMainDto) {
+		Format shape = null;
 		if (requestMainDto != null && requestMainDto.getRequestEntity() != null
 				&& requestMainDto.getRequestEntity().size() > 0) {
 			System.out.println("inside getshape()--- Entity");
-			shape = new DOShape();
+			shape = new DOFormat();
 			for (ParentDTO requestEntity : requestMainDto.getRequestEntity()) {
 				System.out.println(((RequestEntity) requestEntity)
 						.getEntityName());
@@ -18,7 +18,7 @@ public class ShapeFactory {
 		if (requestMainDto != null && requestMainDto.getRequestDto() != null
 				&& requestMainDto.getRequestDto().size() > 0) {
 			System.out.println("inside getshape()--- DTO");
-			shape = new DTOShape();
+			shape = new DTOFormat();
 			for (RequestDto requestDto : requestMainDto.getRequestDto()) {
 				System.out.println(((RequestDto) requestDto).getDtoName());
 				shape.draw(requestDto);
@@ -30,9 +30,9 @@ public class ShapeFactory {
 			
 			
 			for (ParentDTO requestDaoBean : requestMainDto.getRequestBean()) {
-				shape = new DAOShape();
+				shape = new DAOFormat();
 				shape.draw(requestDaoBean);
-				shape = new BeanShape();
+				shape = new BeanFormat();
 				shape.draw(requestDaoBean);
 			}
 		}

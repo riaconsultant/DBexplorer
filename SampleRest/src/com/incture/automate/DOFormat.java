@@ -2,7 +2,7 @@ package com.incture.automate;
 
 import com.automation.bean.CreateDoExample;
 
-public class DOShape implements Shape{
+public class DOFormat implements Format{
 
 	@Override
 	public String draw(ParentDTO requestEntity) {

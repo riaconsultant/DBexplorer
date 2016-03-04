@@ -26,9 +26,9 @@ import com.automation.dto.FieldNameType;
 import com.automation.dto.MainDto;
 import com.automation.dto.RequestBeanDto;
 import com.automation.dto.RequestDto;
-import com.incture.automate.RequestMainDto;
-import com.incture.automate.Shape;
-import com.incture.automate.ShapeFactory;
+import com.incture.automate.ClientRequestDto;
+import com.incture.automate.Format;
+import com.incture.automate.FormatFactory;
 
 
 @Path("/service")
@@ -129,11 +129,11 @@ public class TestService {
 	@Path("/createFile")
 	@Produces({ MediaType.APPLICATION_JSON })
 	@Consumes({ MediaType.APPLICATION_JSON })
-	public String fileCreation(RequestMainDto requestMaindto) {
+	public String fileCreation(ClientRequestDto requestMaindto) {
 
 		// Get a DTO having Type of Class to create (DO,DTO,DAO)
 		System.out.println("inside fileCreation()... calling getShape()");
-		ShapeFactory.getShape(requestMaindto);
+		FormatFactory.getShape(requestMaindto);
 		return "Success";
 	}
 }

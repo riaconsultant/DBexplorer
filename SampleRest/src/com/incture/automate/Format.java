@@ -1,6 +1,6 @@
 package com.incture.automate;
 
-public interface Shape {
+public interface Format {
 	
 	
 	String draw(ParentDTO dto);

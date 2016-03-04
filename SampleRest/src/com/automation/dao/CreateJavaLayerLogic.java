@@ -39,7 +39,7 @@ public class CreateJavaLayerLogic {
 		}
 
 		builder = commonUtil.getPojoClass(fileType, builder, fields,
-				customfields);
+				customfields,className);
 		// builder =
 		// commonutil.getCustomPojoClass(FileType,builder,customfields);
 

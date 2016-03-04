@@ -2,7 +2,7 @@ package com.incture.automate;
 
 import com.automation.bean.CreateDoExample;
 
-public class BeanShape implements Shape{
+public class BeanFormat implements Format{
 
 	@Override
 	public String draw(ParentDTO requestBean) {
