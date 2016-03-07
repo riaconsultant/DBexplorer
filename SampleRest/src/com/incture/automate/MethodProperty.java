@@ -52,4 +52,11 @@ public class MethodProperty {
 		this.pProperty = pProperty;
 	}
 
+	@Override
+	public String toString() {
+		return "MethodProperty [callType=" + callType + ", name=" + name
+				+ ", returnType=" + returnType + ", noOfParamaeter="
+				+ noOfParamaeter + ", pProperty=" + pProperty + "]";
+	}
+
 }

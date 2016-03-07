@@ -23,4 +23,10 @@ public class ParameterProperty {
 		this.pDataType = pDataType;
 	}
 
+	@Override
+	public String toString() {
+		return "ParameterProperty [pName=" + pName + ", pDataType=" + pDataType
+				+ "]";
+	}
+
 }

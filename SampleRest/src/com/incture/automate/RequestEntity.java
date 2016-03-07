@@ -35,4 +35,10 @@ public class RequestEntity implements ParentDTO{
 		this.fieldProperty = fieldProperty;
 	}
 
+	@Override
+	public String toString() {
+		return "RequestEntity [entityName=" + entityName + ", fieldCount="
+				+ fieldCount + ", fieldProperty=" + fieldProperty + "]";
+	}
+
 }

@@ -20,4 +20,9 @@ public class FieldProperty {
 		this.type = type;
 	}
 
+	@Override
+	public String toString() {
+		return "FieldProperty [name=" + name + ", type=" + type + "]";
+	}
+
 }

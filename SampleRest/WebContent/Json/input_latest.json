@@ -1,4 +1,9 @@
 {
+  "reqProject" : {"pName" : "22222",
+            "pInfo" : "common app layer",
+            "pVersion" : "1.0",
+            "pDomain" : "Incture Product"
+           },
   "requestDto": [
       {
           "dtoName": "RequestDto",

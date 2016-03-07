@@ -1,9 +1,17 @@
 package com.incture.automate;
 
 public class FormatFactory {
-
-	public static void getShape(ClientRequestDto requestMainDto) {
+	public static RequestProject rProject;
+	public static void getFormat(ClientRequestDto requestMainDto) {
 		Format shape = null;
+		
+		if (requestMainDto != null && requestMainDto.getReqProject() !=null) {
+			System.out.println("***"+requestMainDto.getReqProject().getpName());
+			
+			rProject = requestMainDto.getReqProject();
+		
+		}
+		
 		if (requestMainDto != null && requestMainDto.getRequestEntity() != null
 				&& requestMainDto.getRequestEntity().size() > 0) {
 			System.out.println("inside getshape()--- Entity");

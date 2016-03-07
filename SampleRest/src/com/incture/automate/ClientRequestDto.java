@@ -7,9 +7,20 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 public class ClientRequestDto {
 
+	private RequestProject reqProject;
 	private List<RequestDto> requestDto;
 	private List<RequestEntity> requestEntity;
 	private List<RequestBean> requestBean;
+
+	
+
+	public RequestProject getReqProject() {
+		return reqProject;
+	}
+
+	public void setReqProject(RequestProject reqProject) {
+		this.reqProject = reqProject;
+	}
 
 	public List<RequestDto> getRequestDto() {
 		return requestDto;
@@ -33,6 +44,13 @@ public class ClientRequestDto {
 
 	public void setRequestBean(List<RequestBean> requestBean) {
 		this.requestBean = requestBean;
+	}
+
+	@Override
+	public String toString() {
+		return "ClientRequestDto [reqProject=" + reqProject + ", requestDto="
+				+ requestDto + ", requestEntity=" + requestEntity
+				+ ", requestBean=" + requestBean + "]";
 	}
 
 }

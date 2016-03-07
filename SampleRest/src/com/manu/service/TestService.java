@@ -26,6 +26,7 @@ import com.automation.dto.FieldNameType;
 import com.automation.dto.MainDto;
 import com.automation.dto.RequestBeanDto;
 import com.automation.dto.RequestDto;
+import com.automation.util.JSONUtil;
 import com.incture.automate.ClientRequestDto;
 import com.incture.automate.Format;
 import com.incture.automate.FormatFactory;
@@ -130,10 +131,12 @@ public class TestService {
 	@Produces({ MediaType.APPLICATION_JSON })
 	@Consumes({ MediaType.APPLICATION_JSON })
 	public String fileCreation(ClientRequestDto requestMaindto) {
-
 		// Get a DTO having Type of Class to create (DO,DTO,DAO)
+		
+		JSONUtil.createProjectFile(requestMaindto.getReqProject().getpName());
 		System.out.println("inside fileCreation()... calling getShape()");
-		FormatFactory.getShape(requestMaindto);
+		FormatFactory.getFormat(requestMaindto);
+		JSONUtil.createProjectJsonFile(requestMaindto);
 		return "Success";
 	}
 }

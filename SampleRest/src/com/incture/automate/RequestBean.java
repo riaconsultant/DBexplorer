@@ -71,4 +71,13 @@ public class RequestBean implements ParentDTO {
 		this.mProperty = mProperty;
 	}
 
+	@Override
+	public String toString() {
+		return "RequestBean [beanName=" + beanName + ", restWrapperName="
+				+ restWrapperName + ", requestEntity=" + requestEntity
+				+ ", requestDto=" + requestDto + ", persistentUnit="
+				+ persistentUnit + ", mProperty=" + mProperty + ", path="
+				+ path + "]";
+	}
+
 }

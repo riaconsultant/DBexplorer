@@ -35,4 +35,10 @@ public class RequestDto implements ParentDTO{
 		this.fieldProperty = fieldProperty;
 	}
 
+	@Override
+	public String toString() {
+		return "RequestDto [dtoName=" + dtoName + ", fieldCount=" + fieldCount
+				+ ", fieldProperty=" + fieldProperty + "]";
+	}
+
 }
